@@ -184,7 +184,7 @@ plt.legend()
 ~~~
 {: .language-python}
 
->![graph of the test regression data](../fig/cluster_iris.png)
+>![graph of the test regression data](../fig/iris_improved.png)
 {: .output}
 
 # Saving a Graph
