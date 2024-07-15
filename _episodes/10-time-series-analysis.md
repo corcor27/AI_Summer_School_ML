@@ -1,5 +1,5 @@
 ---
-title: "Image classification with CNN's"
+title: "Time Series Classification"
 teaching: 20
 exercises: 30
 questions:
@@ -24,8 +24,7 @@ keypoints:
 
 ### Materials
 
-All materials for this example can be downloaded with the following link: https://drive.google.com/drive/folders/1ebTP7DVQ89FNiezReAmqYW-l5IGxZYFw?usp=sharing
-
+All materials for this example can be downloaded with the following link: https://drive.google.com/drive/folders/15UI8jbgp_EOVParKWVtISaBjMgxtUD2v?usp=sharing
 
 
 {% include links.md %}
