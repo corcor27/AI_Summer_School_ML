@@ -4,31 +4,61 @@ teaching: 20
 exercises: 30
 questions:
 - "How can we classify images using a neural network?"
-objectives:
-- "Explain the basic architecture of a perceptron."
-- "Create a perceptron to encode a simple function."
-- "Understand that a single perceptron cannot solve a problem requiring non-linear separability."
-- "Understand that layers of perceptrons allow non-linear separable problems to be solved."
-- "Evaluate the accuracy of a multi-layer perceptron using real input data."
-- "Understand that cross validation allows the entire data set to be used in the training process."
-keypoints:
-- "Perceptrons are artificial neurons which build neural networks."
-- "A perceptron takes multiple inputs, multiplies each by a weight value and sums the weighted inputs. It then applies an activation function to the sum."
-- "A single perceptron can solve simple functions which are linearly separable."
-- "Multiple perceptrons can be combined to form a neural network which can solve functions that aren't linearly separable."
-- "Training a neural network requires some training data to show the network examples of what to learn."
-- "To validate our training we split the the training data into a training set and a test set."
-- "To ensure the whole dataset can be used in training and testing we can train multiple times with different subsets of the data acting as training/testing data. This is called cross validation."
-- "Several companies now offer cloud APIs where we can train neural networks on powerful computers."
+
 ---
 
 ### Materials
 
 All materials for this example can be downloaded with the following link: https://drive.google.com/drive/folders/1ebTP7DVQ89FNiezReAmqYW-l5IGxZYFw?usp=sharing
 
-# Introduction
+# How do Convolutional neural networks work?
 
-Neural networks, drawing inspiration from the workings of the human brain, represent a machine learning approach adept at discerning patterns and categorizing data, frequently leveraging images as input. This technique, rooted in the 1950s, has evolved through successive iterations, surmounting inherent constraints. Today, the pinnacle of neural network advancement is often denoted as deep learning.
+Convolutional neural networks are distinguished from other neural networks by their superior performance with image, speech, or audio signal inputs. They have three main types of layers, which are:
+
+- Convolutional layer
+- Pooling layer
+- Fully-connected (FC) layer
+
+The convolutional layer is the first layer of a convolutional network. While convolutional layers can be followed by additional convolutional layers or pooling layers, the fully-connected layer is the final layer. With each layer, the CNN increases in its complexity, identifying greater portions of the image. Earlier layers focus on simple features, such as colors and edges. As the image data progresses through the layers of the CNN, it starts to recognize larger elements or shapes of the object until it finally identifies the intended object.
+
+## Convolutional layer
+
+The convolutional layer is the core building block of a CNN, and it is where the majority of computation occurs. It requires a few components, which are input data, a filter, and a feature map. Let’s assume that the input will be a color image, which is made up of a matrix of pixels in 3D. This means that the input will have three dimensions—a height, width, and depth—which correspond to RGB in an image. We also have a feature detector, also known as a kernel or a filter, which will move across the receptive fields of the image, checking if the feature is present. This process is known as a convolution.
+
+The feature detector is a two-dimensional (2-D) array of weights, which represents part of the image. While they can vary in size, the filter size is typically a 3x3 matrix; this also determines the size of the receptive field. The filter is then applied to an area of the image, and a dot product is calculated between the input pixels and the filter. This dot product is then fed into an output array. Afterwards, the filter shifts by a stride, repeating the process until the kernel has swept across the entire image. The final output from the series of dot products from the input and the filter is known as a feature map, activation map, or a convolved feature.
+
+Note that the weights in the feature detector remain fixed as it moves across the image, which is also known as parameter sharing. Some parameters, like the weight values, adjust during training through the process of backpropagation and gradient descent. However, there are three hyperparameters which affect the volume size of the output that need to be set before the training of the neural network begins. These include:
+
+- The number of filters affects the depth of the output. For example, three distinct filters would yield three different feature maps, creating a depth of three. 
+
+- Stride is the distance, or number of pixels, that the kernel moves over the input matrix. While stride values of two or greater is rare, a larger stride yields a smaller output.
+
+- Zero-padding is usually used when the filters do not fit the input image. This sets all elements that fall outside of the input matrix to zero, producing a larger or equally sized output. There are three types of padding:
+
+- Valid padding: This is also known as no padding. In this case, the last convolution is dropped if dimensions do not align.
+- Same padding: This padding ensures that the output layer has the same size as the input layer.
+- Full padding: This type of padding increases the size of the output by adding zeros to the border of the input.
+
+After each convolution operation, a CNN applies a Rectified Linear Unit (ReLU) transformation to the feature map, introducing nonlinearity to the model.
+![A multi-layer perceptron](../fig/con.png)
+## Additional convolutional layer
+
+As we mentioned earlier, another convolution layer can follow the initial convolution layer. When this happens, the structure of the CNN can become hierarchical as the later layers can see the pixels within the receptive fields of prior layers.  As an example, let’s assume that we’re trying to determine if an image contains a bicycle. You can think of the bicycle as a sum of parts. It is comprised of a frame, handlebars, wheels, pedals, et cetera. Each individual part of the bicycle makes up a lower-level pattern in the neural net, and the combination of its parts represents a higher-level pattern, creating a feature hierarchy within the CNN. Ultimately, the convolutional layer converts the image into numerical values, allowing the neural network to interpret and extract relevant patterns.
+![A multi-layer perceptron](../fig/triangle.png)
+## Pooling layer
+
+Pooling layers, also known as downsampling, conducts dimensionality reduction, reducing the number of parameters in the input. Similar to the convolutional layer, the pooling operation sweeps a filter across the entire input, but the difference is that this filter does not have any weights. Instead, the kernel applies an aggregation function to the values within the receptive field, populating the output array. There are two main types of pooling:
+
+- Max pooling: As the filter moves across the input, it selects the pixel with the maximum value to send to the output array. As an aside, this approach tends to be used more often compared to average pooling.
+- Average pooling: As the filter moves across the input, it calculates the average value within the receptive field to send to the output array.
+
+While a lot of information is lost in the pooling layer, it also has a number of benefits to the CNN. They help to reduce complexity, improve efficiency, and limit risk of overfitting. 
+
+## Fully-connected layer
+
+The name of the full-connected layer aptly describes itself. As mentioned earlier, the pixel values of the input image are not directly connected to the output layer in partially connected layers. However, in the fully-connected layer, each node in the output layer connects directly to a node in the previous layer.
+
+This layer performs the task of classification based on the features extracted through the previous layers and their different filters. While convolutional and pooling layers tend to use ReLu functions, FC layers usually leverage a softmax activation function to classify inputs appropriately, producing a probability from 0 to 1.
 
 ## Prepare the dataset
 ~~~

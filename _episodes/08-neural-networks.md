@@ -3,7 +3,7 @@ title: "Neural Networks"
 teaching: 20
 exercises: 30
 questions:
-- "How can we classify images using a neural network?"
+- "How can we data points using a neural network?"
 objectives:
 - "Explain the basic architecture of a perceptron."
 - "Create a perceptron to encode a simple function."
