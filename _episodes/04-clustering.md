@@ -85,7 +85,7 @@ plt.legend()
 plt.close()
 ~~~
 {: .language-python}
->![graph of the test regression data](../fig/standard_iris.png)
+>![graph of the test regression data](../fig/iris_improved.png)
 {: .output}
 
 As observed, the "setosa" species appears to cluster more distinctly, while there is some overlap or noise between "versicolor" and "virginica," despite their apparent similarity.
